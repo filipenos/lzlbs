@@ -1,10 +1,8 @@
 **Antes de iniciar você vai precisar de:**
 
-[docker][docker]
-[docker]: https://www.docker.com/ "docker"
+[docker](https://www.docker.com)
 
-[python3][python3]
-[python3]: https://www.python.org/downloads/ "python3"
+[python3](https://www.python.org/downloads/)
 
 **Para rodar o projecto siga as orientações:**
 
@@ -18,12 +16,8 @@
 
 `make run`
 
-A API ficará disponível  em: [localhost][localhost]
-[localhost]: https://localhost:5000/ "https://localhost:5000/"
+A API ficará disponível  em: [localhost](https://localhost:5000/)
 
 A chave para autenticação da API é: **0123456789**
 
-
-
-A documentação completa pode ser encontrada em: [swagger][swagger]
-[swagger]: http://localhost:5000/swagger "localhost://swagger"
+A documentação completa pode ser encontrada em: [swagger](http://localhost:5000/swagger)
