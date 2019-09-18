@@ -7,11 +7,15 @@
 [pip3](https://pip.pypa.io/en/stable/)
 
 **Para verificar**
+
 docker version
+
 python3 --version
+
 pip3 --version
 
 **Você ira precisar da uma dependência do mysql libmysqlclient-dev**
+
 *Instalação em ambientes ubuntu/debian*
 
     sudo apt install libmysqlclient-dev
@@ -26,7 +30,7 @@ pip3 --version
 
     cd lzlbs
 
-    make run-mysql 
+    make run-mysql
 
 *aguarde 1 minuto enquanto o mysql é iniciado*
 
