@@ -14,6 +14,8 @@
 
 `make setup-mysql`
 
+`make install-deps`
+
 `make run`
 
 A API ficará disponível  em: [http://localhost:5000](http://localhost:5000/)
