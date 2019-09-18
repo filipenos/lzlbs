@@ -1,0 +1,299 @@
+swagger: '2.0'
+schemes:
+  - http
+host: 'localhost:5000'
+basePath: /api
+info:
+  version: 1.0.0
+  title: Desafio LuizaLabs
+  description: Adiministra o cadastro de clientes e suas listas favoritas
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+  - Bearer: []
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /auth:
+    post:
+      summary: Authorize requests
+      description: Authorize requests
+      operationId: auth
+      parameters:
+        - in: body
+          name: key
+          schema:
+            $ref: '#/definitions/Auth'
+        - in: header
+          name: Content-Type
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Authorized successfully
+          schema:
+            $ref: '#/definitions/AuthResponse'
+        '400':
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: Authorization forbidden
+          schema:
+            $ref: '#/definitions/Error'
+  /clients:
+    post:
+      summary: Create the new client
+      description: Create the new client
+      operationId: createClient
+      parameters:
+        - in: body
+          name: client
+          schema:
+            $ref: '#/definitions/Client'
+      responses:
+        '201':
+          description: Create Successfully
+          schema:
+            $ref: '#/definitions/Client'
+        '400':
+          description: Invalid Request
+        '409':
+          description: Email already exists
+        '500':
+          description: Internal Server Error
+      security:
+        - Bearer: []
+  '/clients/{id}':
+    get:
+      summary: Get the client
+      description: Get the client
+      operationId: getClient
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Client'
+        '400':
+          description: Invalid Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - Bearer: []
+    put:
+      summary: Update the client
+      description: Update the client
+      operationId: updateClient
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+        - in: body
+          name: client
+          schema:
+            $ref: '#/definitions/Client'
+      responses:
+        '200':
+          description: Updated Successfully
+          schema:
+            $ref: '#/definitions/Client'
+        '400':
+          description: Invalid Request
+        '409':
+          description: Email already exists
+        '500':
+          description: Internal Server Error
+      security:
+        - Bearer: []
+    delete:
+      summary: Delete the client
+      description: Delete the client
+      operationId: deleteClient
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: Deleted Successfully
+        '400':
+          description: Invalid Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - Bearer: []
+  /products:
+    get:
+      summary: Get products
+      description: Get saved products
+      operationId: getProducts
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Products'
+        '400':
+          description: Invalid Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - Bearer: []
+  '/products/{id}':
+    get:
+      summary: Get products
+      description: Get saved products
+      operationId: getProduct
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Product'
+        '400':
+          description: Invalid Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - Bearer: []
+  '/whitelist/{client_id}':
+    get:
+      summary: List products on withelist
+      description: List products on withelist
+      operationId: getWithelist
+      parameters:
+        - in: path
+          name: client_id
+          type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Whitelist'
+        '400':
+          description: Invalid Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - Bearer: []
+  '/whitelist/{client_id}/{product_id}':
+    post:
+      summary: List products on withelist
+      description: List products on withelist
+      operationId: addToWhitelist
+      parameters:
+        - in: path
+          name: client_id
+          type: string
+          required: true
+        - in: path
+          name: product_id
+          type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ProductWhitelist'
+        '400':
+          description: Invalid Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - Bearer: []
+definitions:
+  Error:
+    type: object
+    properties:
+      message:
+        type: string
+        example: error message
+  Auth:
+    type: object
+    properties:
+      key:
+        type: string
+        example: 0123456789
+  AuthResponse:
+    type: object
+    properties:
+      Authorization:
+        type: string
+        example: Bearer <token_code>
+  Client:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Joao da Silva
+      email:
+        type: string
+        example: joaotest@test.com
+  Product:
+    type: object
+    properties:
+      price:
+        type: integer
+      image:
+        type: string
+      brand:
+        type: string
+      id:
+        type: string
+      title:
+        type: string
+  Products:
+    type: object
+    properties:
+      meta:
+        type: object
+        properties:
+          page_number:
+            type: integer
+          page_size:
+            type: integer
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/Product'
+  ProductWhitelist:
+    type: object
+    properties:
+      favorite_list_id:
+        type: integer
+      product_id:
+        type: string
+      id:
+        type: integer
+  Whitelist:
+    type: array
+    items:
+      $ref: '#/definitions/ProductWhitelist'
