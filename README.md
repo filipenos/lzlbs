@@ -16,8 +16,8 @@
 
 `make run`
 
-A API ficará disponível  em: [localhost](https://localhost:5000/)
+A API ficará disponível  em: [http://localhost:5000](http://localhost:5000/)
 
 A chave para autenticação da API é: **0123456789**
 
-A documentação completa pode ser encontrada em: [swagger](http://localhost:5000/swagger)
+A documentação completa pode ser encontrada em: [http://localhost:5000/swagger](http://localhost:5000/swagger)
