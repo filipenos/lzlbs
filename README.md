@@ -38,6 +38,10 @@
 
 A API ficará disponível  em: [http://localhost:5000](https://localhost:5000/)
 
+*para parar o mysql execute *
+
+    make stop-mysql
+
 A chave para autenticação da API é: **0123456789**
 
 Para efetuar qualquer operação é necessário antes efetuar a autorização, para isso:
