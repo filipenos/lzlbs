@@ -204,8 +204,8 @@ paths:
         - Bearer: []
   '/whitelist/{client_id}/{product_id}':
     post:
-      summary: List products on withelist
-      description: List products on withelist
+      summary: Add product on client whitelist
+      description: Add product on client whitelist
       operationId: addToWhitelist
       parameters:
         - in: path
