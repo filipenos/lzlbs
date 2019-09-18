@@ -28,7 +28,7 @@
 
     cd lzlbs
 
-    make run-mysql 
+    make start-mysql
 
 *aguarde 1 minuto enquanto o mysql é iniciado*
 

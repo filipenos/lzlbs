@@ -28,14 +28,14 @@ CREATE TABLE `favorite_list` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-DROP TABLE IF EXISTS `whitelist`;
-CREATE TABLE `whitelist` (
+DROP TABLE IF EXISTS `wishlist`;
+CREATE TABLE `wishlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `favorite_list_id` int(11) NOT NULL,
   `product_id` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `favorite_list_id` (`favorite_list_id`),
-  CONSTRAINT `whitelist_ibfk_1` FOREIGN KEY (`favorite_list_id`) REFERENCES `favorite_list` (`id`)
+  CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`favorite_list_id`) REFERENCES `favorite_list` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

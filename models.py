@@ -11,7 +11,7 @@ class FavoriteList:
         self.id = id
 
 
-class Whitelist:
+class Wishlist:
     def __init__(self, favorite_list_id, product_id, id=None):
         self.favorite_list_id = favorite_list_id
         self.product_id = product_id

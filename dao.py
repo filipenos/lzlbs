@@ -1,4 +1,4 @@
-from models import Client, FavoriteList, Whitelist
+from models import Client, FavoriteList, Wishlist
 
 
 class ClientDAO:
@@ -57,26 +57,26 @@ class FavoriteListDAO:
         return FavoriteList(result[1], result[0])
 
 
-class WhitelistDAO:
+class WishlistDAO:
     def __init__(self, db):
         self.__db = db
 
-    def save(self, whitelist):
+    def save(self, wishlist):
         cursor = self.__db.connection.cursor()
-        cursor.execute('INSERT INTO whitelist (favorite_list_id, product_id) VALUES (%s, %s)', (whitelist.favorite_list_id,whitelist.product_id))
-        whitelist.id = cursor.lastrowid
+        cursor.execute('INSERT INTO wishlist (favorite_list_id, product_id) VALUES (%s, %s)', (wishlist.favorite_list_id,wishlist.product_id))
+        wishlist.id = cursor.lastrowid
         self.__db.connection.commit()
 
     def list(self, client_id):
         cursor = self.__db.connection.cursor()
-        cursor.execute('SELECT w.id, w.favorite_list_id, w.product_id FROM whitelist w JOIN favorite_list f ON f.id = w.favorite_list_id WHERE f.client_id=%s', (client_id,))
+        cursor.execute('SELECT w.id, w.favorite_list_id, w.product_id FROM wishlist w JOIN favorite_list f ON f.id = w.favorite_list_id WHERE f.client_id=%s', (client_id,))
         fetch = cursor.fetchall()
-        return parse_whitelist(fetch)
+        return parse_wishlist(fetch)
 
     def exists(self, client_id, product_id):
         cursor = self.__db.connection.cursor()
         cursor.execute(
-            'SELECT count(*) AS size FROM whitelist w JOIN favorite_list f ON f.id = w.favorite_list_id WHERE f.client_id=%s AND w.product_id=%s',
+            'SELECT count(*) AS size FROM wishlist w JOIN favorite_list f ON f.id = w.favorite_list_id WHERE f.client_id=%s AND w.product_id=%s',
             (client_id,product_id))
         result = cursor.fetchone()
         if result is None or result[0] == 0:
@@ -84,7 +84,7 @@ class WhitelistDAO:
         return True
 
 
-def parse_whitelist(fetch):
+def parse_wishlist(fetch):
     def parse(result):
-        return Whitelist(result[1], result[2], result[0])
+        return Wishlist(result[1], result[2], result[0])
     return list(map(parse, fetch))

@@ -4,8 +4,8 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from datetime import datetime, timedelta
 from functools import wraps
 import json, re, jwt
-from dao import ClientDAO, FavoriteListDAO, WhitelistDAO
-from models import Client, FavoriteList, Whitelist
+from dao import ClientDAO, FavoriteListDAO, WishlistDAO
+from models import Client, FavoriteList, Wishlist
 from products import ProductService
 
 app = Flask(__name__)
@@ -32,7 +32,7 @@ app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 db = MySQL(app)
 clientDAO = ClientDAO(db)
 favoriteListDAO = FavoriteListDAO(db)
-whitelistDAO = WhitelistDAO(db)
+wishlistDAO = WishlistDAO(db)
 
 JWT_SECRET = 'secret'
 JWT_ALGORITHM = 'HS256'
@@ -177,10 +177,10 @@ def get_product(product_id=None):
     return product
 
 
-@app.route('/api/whitelist/<int:client_id>', methods=['GET'])
+@app.route('/api/wishlist/<int:client_id>', methods=['GET'])
 @auth_required
-def get_whitelist(client_id):
-    app.logger.info('listing whitelist of client {}'.format(client_id))
+def get_wishlist(client_id):
+    app.logger.info('listing wishlist of client {}'.format(client_id))
     if client_id is None:
         app.logger.warning('client_id is empty')
         return jsonify({'message': 'invalid client_id'}), 400
@@ -190,24 +190,24 @@ def get_whitelist(client_id):
         app.logger.warning('client not found')
         return jsonify({'message': 'client not found'}), 404
 
-    whitelist = whitelistDAO.list(client.id)
-    json_string = json.dumps([ob.__dict__ for ob in whitelist])
+    wishlist = wishlistDAO.list(client.id)
+    json_string = json.dumps([ob.__dict__ for ob in wishlist])
     app.logger.info('successfully')
     return Response(json_string, mimetype='application/json')
 
 
-@app.route('/api/whitelist/<int:client_id>/<product_id>', methods=['POST'])
+@app.route('/api/wishlist/<int:client_id>/<product_id>', methods=['POST'])
 @auth_required
-def add_to_whitelist(client_id, product_id):
-    app.logger.info('add product {} to whitelist of client {}'.format(product_id, client_id))
+def add_to_wishlist(client_id, product_id):
+    app.logger.info('add product {} to wishlist of client {}'.format(product_id, client_id))
     client = clientDAO.get(client_id)
     if client is None:
         app.logger.warning('client not found')
         return jsonify({'message': 'client not found'}), 404
 
-    if whitelistDAO.exists(client.id, product_id):
+    if wishlistDAO.exists(client.id, product_id):
         app.logger.warning('product already exists')
-        return jsonify({'message': 'product already added on whitelist'}), 409
+        return jsonify({'message': 'product already added on wishlist'}), 409
 
     product = ProductService.get(product_id)
     if product is None:
@@ -220,10 +220,10 @@ def add_to_whitelist(client_id, product_id):
         favorite_list = FavoriteList(client.id)
         favoriteListDAO.save(client, favorite_list)
 
-    whitelist = Whitelist(favorite_list.id, product_id)
-    whitelistDAO.save(whitelist)
-    app.logger.info('successfully to add product on whitelist')
-    return jsonify(whitelist.__dict__), 201
+    wishlist = Wishlist(favorite_list.id, product_id)
+    wishlistDAO.save(wishlist)
+    app.logger.info('successfully to add product on wishlist')
+    return jsonify(wishlist.__dict__), 201
 
 
 @app.errorhandler(404)

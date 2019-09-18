@@ -1,4 +1,4 @@
-run-mysql:
+start-mysql:
 	docker run \
 		--name mysql \
 		--rm \
@@ -22,3 +22,7 @@ install-deps:
 
 run:
 	python3 app.py
+
+clean:
+	rm -rf venv
+	rm -rf __pycache__
