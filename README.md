@@ -4,22 +4,39 @@
 
 [python3](https://www.python.org/downloads/)
 
+[pip3](https://pip.pypa.io/en/stable/)
+
+**Para verificar**
+docker version
+python3 --version
+pip3 --version
+
+**Você ira precisar da uma dependência do mysql libmysqlclient-dev**
+*Instalação em ambientes ubuntu/debian*
+
+    sudo apt install libmysqlclient-dev
+
+*Instalação em ambientes mac*
+
+    brew install libmysqlclient-dev
+
 **Para rodar o projecto siga as orientações:**
 
-` git clone https://github.com/filipenos/lzlbs.git`
+    git clone https://github.com/filipenos/lzlbs.git
 
-` cd lzlbs`
+    cd lzlbs
 
-`make run-mysql` *aguarde 1 minuto enquanto o mysql é iniciado*
+    make run-mysql 
 
-`make setup-mysql`
+*aguarde 1 minuto enquanto o mysql é iniciado*
 
-`make install-deps`
+    make setup-mysql
 
-`make run`
+    make run
 
-A API ficará disponível  em: [http://localhost:5000](http://localhost:5000/)
+A API ficará disponível  em: [localhost](https://localhost:5000/)
 
 A chave para autenticação da API é: **0123456789**
 
-A documentação completa pode ser encontrada em: [http://localhost:5000/swagger](http://localhost:5000/swagger)
+A documentação completa pode ser encontrada em: [swagger](http://localhost:5000/swagger)
+
